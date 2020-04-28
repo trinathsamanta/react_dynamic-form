@@ -26,10 +26,10 @@ class Form extends Component {
           address2error:"",
           address3error:"",
           countryerrror:"",
-          error:{
+          
             
-          managers: [{name:"", email:"", phone:""}]
-          }
+          managererror: [{nameerror:"",emailerror:"",phoneerror:""}]
+          
           
           
         }
@@ -44,31 +44,63 @@ class Form extends Component {
         let address1error = '';
         let address2error = '';
         let address3error = '';
+        let Validproduction=/\D\S/g;
+        let Validemail=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g;
+        let Validphone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        let Validaddress="";
+        let Validname="";
+        
 
-        if(this.state.company==="select the company"){
+
+
+        if(!this.state.company){
           companyerror='company selection required';
         }
+        
 
         if(!this.state.production){
           productionerror='production name is required';
            }
-
-        if(this.state.email){
+           else if(!Validproduction.test(this.state.production)){
+            productionerror='shouldnot have digits or special character'
+           }else{
+            productionerror=''
+           }
+           
+        if(!this.state.email){
           emailerror='email is required';
          }
+         else if(!Validemail.test(this.state.email)){
+          emailerror='invalid email'
+          }else{
+          emailerror=""
+          }
 
         if(!this.state.phone){
           phoneerror='phone number is required';
         }
+        else if(!Validphone.test(this.state.phone)){
+          phoneerror='invalid '
+          }else{
+            phoneerror=''
+          }
+          
+
         if(!this.state.address1){
           address1error='address1 is required';
         }
+       
+
         if(!this.state.address2){
           address2error='address2 is required';
         }
+        
+
         if(!this.state.address3){
           address3error='address3 is required';
         }
+        
+
          if(companyerror||productionerror||emailerror||phoneerror||address1error||address2error||address3error){
              this.setState({companyerror,productionerror,emailerror,phoneerror,address1error,address2error,address3error})
              return false;
@@ -101,9 +133,10 @@ class Form extends Component {
 
     addmanager = (e) => {
       e.preventDefault()
-        this.setState((prevState) => ({
-          managers: [...prevState.managers, {name:"", email:"", phone:""}],
-        }));
+        this.setState({
+          managers: [...this.state.managers, {name:"", email:"", phone:""}],
+          managererror: [...this.state.managererror,{nameerror:"",emailerror:"",phoneerror:""}]
+        },()=>{console.log(this.state.managererror)});
       }
 
     handleRemoveFields(i){
@@ -229,6 +262,17 @@ class Form extends Component {
                   </td>
                   
                 </tr>
+                <tr>
+                {this.state.managererror[idx].nameerror}
+                <td>
+                {this.state.managererror[idx].emailerror}
+                </td>
+                <td>
+                {this.state.managererror[idx].phoneerror}
+                </td>
+                <td>
+                </td>
+                </tr>
                 
               </tbody>
               
@@ -287,6 +331,17 @@ class Form extends Component {
               type="button"
               onClick={() => this.handleRemoveFields(idx)}>-</button>
                   </td>
+                </tr>
+                <tr>
+                {this.state.managererror[idx].nameerror}
+                <td>
+                {this.state.managererror[idx].emailerror}
+                </td>
+                <td>
+                {this.state.managererror[idx].phoneerror}
+                </td>
+                <td>
+                </td>
                 </tr>
                 
               </tbody>
