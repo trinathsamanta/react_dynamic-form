@@ -65,9 +65,9 @@ class Home extends Component {
             {
               (store).map((i,key)=>(
                 <tr key={key}>
-                <td scope="row">{key}</td>
-                <td scope="col"><table><thead>{i.company}</thead><tbody>{i.production}</tbody></table></td>
-                <div scope="col">
+                <th scope="row">{key}</th>
+                <th scope="col"><table><thead>{i.company}</thead><tbody>{i.production}</tbody></table></th>
+                
                 {
                   i.managers.map((idx,k)=>(
                     <table key={k}>
@@ -80,7 +80,7 @@ class Home extends Component {
                  
                   
                 
-                </div>
+                
                 <td>
             <button className="btn btn-info">edit</button>
             <button className="btn btn-info" onClick={()=>this.delete(key)}>delete</button>

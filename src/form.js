@@ -7,7 +7,8 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state={
-          company:"",
+          company:["kfc","adidas","reebok","iris food"],
+          companyselected:"",
           production:'',
           email:'',
           phone:"",
@@ -19,38 +20,79 @@ class Form extends Component {
           countries2serve:[],
           managers: [{name:"", email:"", phone:""}],
           companyerror:"",
-            productionerror:"",
-            emailerror:"",
-            phoneerror:"",
-            address1error:"",
+          productionerror:"",
+          emailerror:"",
+          phoneerror:"",
+          address1error:"",
           address2error:"",
           address3error:"",
           countryerrror:"",
-          
-            
-          managererror: [{nameerror:"",emailerror:"",phoneerror:""}]
-          
+          managererror: [{nameerror:"",emailerror:"",phoneerror:""}],
+          carderror:""
           
           
         }
         
       }
       
+      cardvalidation(){
+        
+        let Validname=/^[A-Za-z]+([\ A-Za-z]+)*/;
+        let Validemail=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g;
+        let Validphone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        let managerdetails=[...this.state.managers]
+        let managerror=[...this.state.managererror]
+        for(let i=0;i<managerdetails.length;i++){
+          
+           
+         if(!managerdetails[i].name){
+          managerror[i].nameerror='name is required'
+         }
+         else if(!Validname.test(managerdetails[i].name)){
+          managerror[i].nameerror='name is invalid'
+         }
+
+         if(!managerdetails[i].email){
+          managerror[i].emailerror='email is required'
+         }
+         else if(!Validemail.test(managerdetails[i].name)){
+          managerror[i].emailerror='email is invalid'
+         }     
+         
+         if(!managerdetails[i].phone){
+          managerror[i].phoneerror='phone number is required'
+         }
+         else if(!Validphone.test(managerdetails[i].phone)){
+          managerror[i].phoneerror='phone number is invalid'
+         } 
+         
+         if(managerror[i].nameerror||managerror[i].emailerror||managerror[i].phoneerror){
+           this.setState({
+            managererror:[...managerror],
+            
+           },()=>{console.log(this.state.managererror)})
+           
+         }
+
+         }
+      }
+
       validate=()=>{
         let companyerror = '';
         let productionerror = '';
         let emailerror = '';
         let phoneerror = '';
+        
         let address1error = '';
         let address2error = '';
         let address3error = '';
         let Validproduction=/\D\S/g;
         let Validemail=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g;
         let Validphone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        let Validaddress="";
-        let Validname="";
         
-
+        
+        
+        let carderror=this.cardvalidation()
 
 
         if(!this.state.company){
@@ -100,9 +142,8 @@ class Form extends Component {
           address3error='address3 is required';
         }
         
-
-         if(companyerror||productionerror||emailerror||phoneerror||address1error||address2error||address3error){
-             this.setState({companyerror,productionerror,emailerror,phoneerror,address1error,address2error,address3error})
+         if(companyerror||productionerror||emailerror||phoneerror||address1error||address2error||address3error||carderror){
+             this.setState({companyerror,productionerror,emailerror,phoneerror,address1error,address2error,address3error,carderror})
              return false;
          }    
          return true;
@@ -171,11 +212,16 @@ class Form extends Component {
           
           <div className="row">
           <div className="col">
-            <input inputtype='input' type="text" className="form-control" onChange={this.handleChange} name="production" value={this.state.production}  placeholder="Production Unit Name"/> <p>{this.state.productionerror}</p>
+            <input inputtype='input' type="text" className="form-control" onChange={this.handleChange} name="production" value={this.state.production}  placeholder="Production Unit Name"/> <span>{this.state.productionerror}</span>
           </div>
           <div className="col">
           
-          <select id="company" name="company"  value={this.state.company} onChange={this.handleChange}>
+          <select id="company" name="company"  value={this.state.companyselected} onChange={this.handleChange}>
+          {
+            // this.state.company.map((i,k)=>(
+            //   <option value={`${i}`}>{i}</option>
+            // ))
+          }
           <option value="select the company">select the company</option>
           <option value="Irish Food">Irish Food</option>
           <option value="Adidas">Adidas</option>
@@ -183,7 +229,7 @@ class Form extends Component {
           <option value="Kfc">Kfc</option>
     
     </select>
-    <p>{this.state.companyerror }</p>
+    <span>{this.state.companyerror }</span>
           </div>
           
     </div>
@@ -236,7 +282,8 @@ class Form extends Component {
                         onChange={this.handleMember}
                         value={this.state.managers[idx].name} 
                         className="name"
-                      />
+                      /><br/>
+                      <span>{this.state.managererror[idx].nameerror}</span>
                       </td>
                   <td>
                   <input
@@ -247,7 +294,8 @@ class Form extends Component {
                         onChange={this.handleMember}
                         value={this.state.managers[idx].email} 
                         className="email"
-                      />
+                      /><br/>
+                      <span>{this.state.managererror[idx].emailerror}</span>
                   </td>
                   <td>
                   <input
@@ -258,20 +306,10 @@ class Form extends Component {
                         onChange={this.handleMember}
                         value={this.state.managers[idx].phone} 
                         className="phone"
-                      />
+                      /><br/>
+                      <span>{this.state.managererror[idx].phoneerror}</span>
                   </td>
                   
-                </tr>
-                <tr>
-                {this.state.managererror[idx].nameerror}
-                <td>
-                {this.state.managererror[idx].emailerror}
-                </td>
-                <td>
-                {this.state.managererror[idx].phoneerror}
-                </td>
-                <td>
-                </td>
                 </tr>
                 
               </tbody>
@@ -303,6 +341,8 @@ class Form extends Component {
                         value={this.state.managers[idx].name} 
                         className="name"
                       />
+                      <br/>
+                      <span>{this.state.managererror[idx].nameerror}</span>
                       </td>
                   <td>
                   <input
@@ -314,6 +354,8 @@ class Form extends Component {
                         value={this.state.managers[idx].email} 
                         className="email"
                       />
+                      <br/>
+                      <span>{this.state.managererror[idx].emailerror}</span>
                   </td>
                   <td>
                   <input
@@ -325,6 +367,8 @@ class Form extends Component {
                         value={this.state.managers[idx].phone} 
                         className="phone"
                       />
+                      <br/>
+                      <span>{this.state.managererror[idx].phoneerror}</span>
                   </td>
                   <td>
                   <button className="btn btn-secondary"
@@ -332,17 +376,7 @@ class Form extends Component {
               onClick={() => this.handleRemoveFields(idx)}>-</button>
                   </td>
                 </tr>
-                <tr>
-                {this.state.managererror[idx].nameerror}
-                <td>
-                {this.state.managererror[idx].emailerror}
-                </td>
-                <td>
-                {this.state.managererror[idx].phoneerror}
-                </td>
-                <td>
-                </td>
-                </tr>
+                
                 
               </tbody>
               
