@@ -1,9 +1,10 @@
-import {ADD, DEL} from '../action/action'
+import {ADD, DEL, UPDATE} from '../action/action'
+
 const initial=[{
-  company:"Irish Food",
+  companyselected:"Irish Food",
   production:'redchief',
   email:'dan@gmail.com',
-  phone:undefined,
+  phone:"",
   address1:"asdsa",
   address2:"abcde",
   address3:"fghi",
@@ -14,10 +15,10 @@ const initial=[{
   },
  
   {
-    company:"Adidas",
+    companyselected:"Adidas",
     production:'redchief',
     email:'dan@gmail.com',
-    phone:undefined,
+    phone:"",
     address1:"asdsa",
     address2:"abcde",
     address3:"fghi",
@@ -26,10 +27,10 @@ const initial=[{
     countries2serve:[],
     managers: [{name:"tricky", email:"abcs@gmail.com", phone:"7894561234"},{name:"trickye", email:"abcds@gmail.com", phone:"7894561234"}],
   },{
-    company:"Reebok",
+    companyselected:"Reebok",
   production:'redchief',
   email:'dan@gmail.com',
-  phone:undefined,
+  phone:"",
   address1:"asdsa",
   address2:"abcde",
   address3:"fghi",
@@ -38,10 +39,10 @@ const initial=[{
   countries2serve:[],
   managers: [{name:"tricky", email:"abcs@gmail.com", phone:"7894561234"},{name:"trickye", email:"abcds@gmail.com", phone:"7894561234"}],
   },{
-    company:"Kfc",
+    companyselected:"Kfc",
   production:'redchief',
   email:'dan@gmail.com',
-  phone:undefined,
+  phone:"",
   address1:"asdsa",
   address2:"abcde",
   address3:"fghi",
@@ -55,6 +56,11 @@ const initial=[{
       switch (action.type) {
           case ADD:
               state=[...state,action.payload]
+              return state
+          case UPDATE:
+            const upd = [...state]
+            upd.splice(action.id,1,action.payload)
+            state=[...upd]    
               return state
           case DEL:
             const val = [...state]

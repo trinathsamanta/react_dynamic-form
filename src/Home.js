@@ -31,7 +31,7 @@ class Home extends Component {
       
       let store = this.props.state.reducer.filter(
         (reducer)=>{
-          return reducer.company.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
+          return reducer.companyselected.toLowerCase().indexOf(this.state.search.toLowerCase()) !==-1;
         }
       )
       console.log(this.props.state)
@@ -66,7 +66,7 @@ class Home extends Component {
               (store).map((i,key)=>(
                 <tr key={key}>
                 <th scope="row">{key}</th>
-                <th scope="col"><table><thead>{i.company}</thead><tbody>{i.production}</tbody></table></th>
+                <th scope="col"><table><thead>{i.companyselected}</thead><tbody>{i.production}</tbody></table></th>
                 
                 {
                   i.managers.map((idx,k)=>(
@@ -82,7 +82,10 @@ class Home extends Component {
                 
                 
                 <td>
-            <button className="btn btn-info">edit</button>
+                <Link to ={`/edit/${key}`}>
+                <button className="btn btn-info">edit</button>
+                </Link>
+            
             <button className="btn btn-info" onClick={()=>this.delete(key)}>delete</button>
             </td>
               </tr>

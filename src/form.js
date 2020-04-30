@@ -165,10 +165,10 @@ class Form extends Component {
         console.log(e.target.value)
         if (["name", "email","phone"].includes(e.target.className) ) {
           let managers = [...this.state.managers]
-          managers[e.target.dataset.id][e.target.className] = e.target.value.toUpperCase()
+          managers[e.target.dataset.id][e.target.className] = e.target.value
           this.setState({ managers }, () => console.log(this.state.managers))
         } else {
-          this.setState({ [e.target.name]: e.target.value.toUpperCase() })
+          this.setState({ [e.target.name]: e.target.value })
         }
       }
 
