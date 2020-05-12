@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { add } from './redux/action/action';
+import { add, update } from '../redux/action/action';
 
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state={
-          company:["kfc","adidas","reebok","iris food"],
+          company:[],
           companyselected:"",
           production:'',
           email:'',
@@ -34,7 +34,49 @@ class Form extends Component {
         }
         
       }
-      
+      componentDidMount(){
+        if(this.props.match.params.id){
+          let datadetails =[this.props.state.reducer[this.props.match.params.id]]
+        this.setState({
+          companyselected:datadetails[0].companyselected,
+          production:datadetails[0].production,
+          email:datadetails[0].email,
+          phone:datadetails[0].phone,
+          address1:datadetails[0].address1,
+          address2:datadetails[0].address2,
+          address3:datadetails[0].address3,
+          zip:datadetails[0].zip,
+          country:datadetails[0].country,
+          countries2serve:[...datadetails[0].countries2serve],
+          managers: [...datadetails[0].managers],
+          company:[...this.props.state.companyreducer]
+          
+          
+        })
+     
+            for(let i=0;i<this.state.managers.length;i++){
+              this.setState({
+                managererror:[...this.state.managererror,{nameerror:"",emailerror:"",phoneerror:""}] 
+              })  
+            }
+        }
+        this.setState({
+          company:[...this.props.state.companyreducer]
+        })
+            
+      }
+
+      companyoptions() {
+        
+        var arr = [];
+        
+        
+        for (let i = 0; i < this.state.company.length; i++) {
+        arr.push(<option key={i} value={this.state.company[i].name}>{this.state.company[i].name}</option>)
+        }
+        return arr; 
+    }
+
       cardvalidation(){
         
         let Validname=/^[A-Za-z]+([\ A-Za-z]+)*/;
@@ -197,12 +239,17 @@ class Form extends Component {
           
         }
         else{
-          this.props.dispatch(add(this.state))
+          if(this.props.match.params.id){
+          this.props.dispatch(update(this.state,this.props.id))
+          }
+          else{
+            this.props.dispatch(add(this.state))
+          }
         }
                 
       }
 
-      render() {
+      render() { console.log(this.state)
         return (
           <div className="container-fluid">
           
@@ -216,17 +263,11 @@ class Form extends Component {
           </div>
           <div className="col">
           
-          <select id="company" name="company"  value={this.state.companyselected} onChange={this.handleChange}>
+          <select id="companyselected" name="companyselected"  value={this.state.companyselected} onChange={this.handleChange}>
           {
-            // this.state.company.map((i,k)=>(
-            //   <option value={`${i}`}>{i}</option>
-            // ))
+            this.companyoptions()
           }
-          <option value="select the company">select the company</option>
-          <option value="Irish Food">Irish Food</option>
-          <option value="Adidas">Adidas</option>
-          <option value="Reebok">Reebok</option>
-          <option value="Kfc">Kfc</option>
+          
     
     </select>
     <span>{this.state.companyerror }</span>
@@ -391,7 +432,7 @@ class Form extends Component {
         
         </div>
 
-        <Link to='/'>
+        <Link to='/production_unit'>
         <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
         </Link> 
       
