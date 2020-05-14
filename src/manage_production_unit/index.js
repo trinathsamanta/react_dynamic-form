@@ -46,14 +46,14 @@ class Home extends Component {
 
   render() { console.log(this.props.state)
     let store=""
-    if(this.state.search){
+    if(this.state.search!=""){
       store = this.props.state.reducer.filter(
         (reducer) => {
           return reducer.companyselected.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
         }
       )
     }
-    else if(this.state.companyselected){
+    else if(this.state.companyselected!=""){
       store = this.props.state.reducer.filter(
         (reducer) => {
           return reducer.companyselected.toLowerCase().indexOf(this.state.companyselected.toLowerCase()) !== -1;

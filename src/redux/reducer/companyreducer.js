@@ -2,24 +2,24 @@ import {DELCOMPANY, UPDATECOMPANY} from '../action/companyaction'
 
 const initial=[
     {
-        name:"abcd",
-        email:"abcd@gmail.com",
+        name:"Irish Food",
+        email:"Irish.Food@gmail.com",
         ph:1234567891,
         acc_no:1414,
         country:"country4",
         country_served:["country1","country2","country3","country4","country5","country6","country7"]
     },
     {
-        name:"efgh",
-        email:"efgh@gmail.com",
+        name:"Adidas",
+        email:"Adidas@gmail.com",
         ph:2134567891,
         acc_no:6654,
         country:"country9",
         country_served:["country6","country7","country8","country9","country10","country11","country12"]
     },
     {   
-        name:"ijkl",
-        email:"ijkl@gmail.com",
+        name:"Reebok",
+        email:"Reebok@gmail.com",
         ph:3216459871,
         acc_no:41554,
         country:"country16",

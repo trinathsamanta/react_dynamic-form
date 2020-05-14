@@ -11,7 +11,7 @@ export default class Sidebar extends Component {
             <ul class="nav flex-column">
                     <li class="nav-item"> <Link to="/"> dashboard </Link> </li>
                     <li class="nav-item"> <Link to="/production_unit">Manage Production Unit</Link> </li>
-                    <li class="nav-item"> <Link to="#">Manage public Holiday</Link> </li>
+                    <li class="nav-item"> <Link to="/Holidays">Manage public Holiday</Link> </li>
                     <li class="nav-item"> <Link to="/Allergens">Manage allergens</Link> </li>
                     <li class="nav-item"> <Link to="/Nutrient">Manage nutrients</Link> </li>
                     <li class="nav-item"> <Link to="/Company">Manage company</Link> </li>
