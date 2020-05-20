@@ -13,6 +13,7 @@ import NutrientIndex from './manage_nutrients';
 import Companyindex from './manage_company';
 import CompanyForm from './manage_company/form';
 import Holidayindex from './manage_holidays';
+import HolidayForm from './manage_holidays/form';
 
 
 
@@ -28,6 +29,7 @@ class App extends Component {
       <Switch>
       <Route exact path="/production_unit/edit/:id" component={Form}/>
       <Route exact path="/production_unit/Form" component={Form}/>
+      <Route exact path="/Holidays/Form" component={HolidayForm}/>
       <Route exact path="/Nutrient/Edit/:id" component={NutrientForm}/>
       <Route exact path="/Nutrient/Form" component={NutrientForm}/>
       <Route exact path="/Allergens/Edit/:id" component={AllergenForm}/>

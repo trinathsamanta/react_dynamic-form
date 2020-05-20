@@ -81,7 +81,7 @@ class Form extends Component {
         
         let Validname=/^[A-Za-z]+([\ A-Za-z]+)*/;
         let Validemail=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/g;
-        let Validphone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        let Validphone=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/g;
         let managerdetails=[...this.state.managers]
         let managerror=[...this.state.managererror]
         for(let i=0;i<managerdetails.length;i++){
@@ -111,7 +111,7 @@ class Form extends Component {
          if(managerror[i].nameerror||managerror[i].emailerror||managerror[i].phoneerror){
            this.setState({
             managererror:[...managerror],
-            
+            carderror:"error"
            },()=>{console.log(this.state.managererror)})
            
          }
@@ -134,10 +134,10 @@ class Form extends Component {
         
         
         
-        let carderror=this.cardvalidation()
+        let carderr=this.cardvalidation()
 
 
-        if(!this.state.company){
+        if(!this.state.company||this.state.company==="select the company"){
           companyerror='company selection required';
         }
         
@@ -147,9 +147,9 @@ class Form extends Component {
            }
            else if(!Validproduction.test(this.state.production)){
             productionerror='shouldnot have digits or special character'
-           }else{
-            productionerror=''
            }
+            productionerror=''
+           
            
         if(!this.state.email){
           emailerror='email is required';
@@ -184,11 +184,16 @@ class Form extends Component {
           address3error='address3 is required';
         }
         
-         if(companyerror||productionerror||emailerror||phoneerror||address1error||address2error||address3error||carderror){
-             this.setState({companyerror,productionerror,emailerror,phoneerror,address1error,address2error,address3error,carderror})
+         if(companyerror||productionerror||emailerror||phoneerror||address1error||address2error||address3error){
+             this.setState({companyerror,productionerror,emailerror,phoneerror,address1error,address2error,address3error})
              return false;
+         }else if(this.state.carderror){
+          return false;
+         }
+         else{
+          return true;
          }    
-         return true;
+         
       }
 
       handleChange=e=>{
@@ -264,6 +269,7 @@ class Form extends Component {
           <div className="col">
           
           <select id="companyselected" name="companyselected"  value={this.state.companyselected} onChange={this.handleChange}>
+          <option value="select the company">select the company</option>
           {
             this.companyoptions()
           }

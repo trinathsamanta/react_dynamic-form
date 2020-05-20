@@ -3,6 +3,7 @@ import { reducer } from "./reducer";
 import { allergenreducer } from "./allergenreducer";
 import { nutrientreducer } from "./nutrientreducer";
 import { companyreducer } from "./companyreducer";
+import { holidayreducer } from "./holidayreducer";
 
 
 
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
     allergenreducer:allergenreducer,
     nutrientreducer:nutrientreducer,
     companyreducer:companyreducer,
+    holidayreducer:holidayreducer
 })

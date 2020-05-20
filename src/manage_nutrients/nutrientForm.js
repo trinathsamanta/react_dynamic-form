@@ -20,7 +20,7 @@ class NutrientForm extends Component {
         let nameError=""
         let unitError=""
         let DailyAmtError=""
-        let validName=/^[A-Za-z]+([\ A-Za-z]+)*/;
+        let validName=/"^[A-Za-z]+([\ A-Za-z]+)*"/;
         if(!this.state.name){
             nameError="nutrient name required"
         }
@@ -68,12 +68,12 @@ class NutrientForm extends Component {
     render() { console.log(this.state)
         return (
             <div>
-            <form class="form">
-            <div class="form-group">
-            <div class="form-row align-items-center">
-            <div class="col-sm-3 my-1">
+            <form className="form">
+            <div className="form-group">
+            <div className="form-row align-items-center">
+            <div className="col-sm-3 my-1">
             
-              <input type="text" class="form-control" id="inlineFormInputName" name="name" onChange={this.handleInput} value={this.state.name} placeholder="Nutrient name"/>
+              <input type="text" className="form-control" id="inlineFormInputName" name="name" onChange={this.handleInput} value={this.state.name} placeholder="Nutrient name"/>
               <span>{this.state.nameError}</span>
 
               <select id="unit" name="DailyAmt"  value={this.state.DailyAmt} onChange={this.handleInput}>
